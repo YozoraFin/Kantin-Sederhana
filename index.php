@@ -7,5 +7,6 @@
 </head>
 <body>
     <h1>Ini web Kantin yaaa</h1>
+    <b>Eak</b>
 </body>
 </html>
