@@ -18,7 +18,7 @@ class PenjualController {
     public function dashboard() {
         $revenue = $this->kantinM->getTotalRevenue($this->kantinId);
         $incoming = $this->trxM->getOrdersByPenjual($this->kantinId, 'Proses');
-        require_once 'app/views/penjual/dashboard.php'; // Menunggu
+        require_once 'view/user/pesanan.php'; // Menunggu
     }
 
     public function updateStatusPesanan() {

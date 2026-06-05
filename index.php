@@ -9,6 +9,7 @@ require_once 'Controller/AdminController.php';
 
 $page = $_GET['page'] ?? 'login';
 
+
 if (!isset($_SESSION['user_id']) && $page !== 'login' && $page !== 'proses-login') {
     header("Location: index.php?page=login");
     exit;

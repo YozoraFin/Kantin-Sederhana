@@ -17,20 +17,20 @@ class PembeliController {
     public function dashboard() {
         $ongoing = $this->trxM->getOrdersByPembeli($_SESSION['user_id'], true);
         $history = $this->trxM->getOrdersByPembeli($_SESSION['user_id'], false);
-        require_once 'app/views/pembeli/dashboard.php'; // Menunggu
+        require_once 'view/user/home.php'; // Sudah Diubah
     }
 
     public function listKantin() {
         $keyword = $_GET['search'] ?? '';
         $kantins = (!empty($keyword)) ? $this->kantinM->searchKantin($keyword) : $this->kantinM->getAllKantin();
-        require_once 'app/views/pembeli/kantin_list.php'; // Menunggu
+        require_once 'view/user/tenant.php'; // Menunggu
     }
 
     public function detailKantin() {
         $idKantin = $_GET['id'];
         $kantin = $this->kantinM->getKantinById($idKantin);
         $menus = $this->productM->getMenuByKantin($idKantin);
-        require_once 'app/views/pembeli/kantin_detail.php'; // Menunggu
+        require_once 'view/user/tenant.php'; // tak tambahin detail kantin.php
     }
 
     public function addToCart() {
@@ -45,7 +45,7 @@ class PembeliController {
 
     public function cart() {
         $items = $this->cartM->getCartContent($_SESSION['user_id']);
-        require_once 'app/views/pembeli/cart.php'; // Menunggu
+        require_once 'app/views/pembeli/keranjang.php'; // 
     }
 
     public function deleteCartItem() {
