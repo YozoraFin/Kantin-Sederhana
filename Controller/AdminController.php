@@ -18,7 +18,7 @@ class AdminController {
         $users = $this->userM->getAllUsers();
         $kantins = $this->kantinM->getAllKantinAdmin();
         $trxs = $this->trxM->getAllTransactionsAdmin();
-        require_once 'app/views/admin/dashboard.php'; // Menunggu
+        require_once 'view/user/cms/homeadmin.php'; // Menunggu
     }
 
     public function manageUsers() {
