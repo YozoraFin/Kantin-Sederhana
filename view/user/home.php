@@ -28,7 +28,7 @@
             </ul>
 
             <div class="nav-actions">
-                <a href="profil.php" class="nav-profil">
+                <a href="userprofil.php" class="nav-profil">
                     <i class="fa-solid fa-circle-user"></i>
                 </a>
 
