@@ -20,7 +20,7 @@ switch ($page) {
     case 'proses-login':
     case 'logout':
     case 'ganti-password':
-        require_once 'app/controllers/AuthController.php';
+        require_once 'Controller/AuthController.php';
         $auth = new AuthController($conn);
         if($page === 'login' || $page === 'proses-login') $auth->login();
         if($page === 'ganti-password') $auth->changePassword();
