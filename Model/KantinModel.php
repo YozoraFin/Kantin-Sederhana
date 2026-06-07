@@ -39,6 +39,7 @@ class KantinModel {
         $stmt = $this->db->prepare("INSERT INTO kantin (Nama_Kantin, Telp_Kantin, ID_User, Status_Buka) VALUES (?, ?, ?, ?)");
         return $stmt->execute([$nama, $telp, $idUser, $status]);
     }
+
     public function updateKantin($id, $nama, $telp, $status) {
         $stmt = $this->db->prepare("UPDATE kantin SET Nama_Kantin=?, Telp_Kantin=?, Status_Buka=? WHERE ID_Kantin=?");
         return $stmt->execute([$nama, $telp, $status, $id]);

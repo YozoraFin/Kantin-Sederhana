@@ -16,11 +16,10 @@ if (!isset($_SESSION['user_id']) && $page !== 'login' && $page !== 'proses-login
     }
     
     switch ($page) {
-        case 'login':
-            case 'proses-login':
-                case 'logout':
+    case 'login':
+    case 'proses-login':
+    case 'logout':
     case 'ganti-password':
-        require_once 'Controller/AuthController.php';
         $auth = new AuthController($conn);
         if($page === 'login' || $page === 'proses-login') $auth->login();
         if($page === 'ganti-password') $auth->changePassword();
@@ -73,6 +72,9 @@ if (!isset($_SESSION['user_id']) && $page !== 'login' && $page !== 'proses-login
 
     case 'admin-dashboard':
         (new AdminController($conn))->dashboard();
+        break;
+    case 'admin-edit-user':
+        (new AdminController($conn))->editUserPage();
         break;
     case 'admin-action-user':
         (new AdminController($conn))->manageUsers();
