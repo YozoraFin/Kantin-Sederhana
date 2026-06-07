@@ -23,6 +23,8 @@ class UserModel {
         return $stmt->execute([$hashedPassword, $id]);
     }
 
+    
+    // FUNGSI ADMIN
     public function getAllUsers() {
         return $this->db->query("SELECT * FROM users")->fetchAll(PDO::FETCH_ASSOC);
     }

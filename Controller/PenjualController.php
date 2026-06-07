@@ -1,7 +1,7 @@
 <?php
-require_once 'app/models/KantinModel.php';
-require_once 'app/models/TransactionModel.php';
-require_once 'app/models/ProductModel.php';
+require_once  'Model/KantinModel.php';
+require_once  'Model/TransactionModel.php';
+require_once  'Model/ProductModel.php';
 
 class PenjualController {
     private $kantinM, $trxM, $productM, $kantinId;
