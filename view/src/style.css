@@ -1403,21 +1403,65 @@ color: var(--yellow-color);
 .item-name { font-weight: 600; color: #2d3748; margin-bottom: 4px; }
 .item-price { color: #718096; font-size: 0.9rem; }
 
-/* Tombol + - Jumlah Item */
+/* ==========================================================================
+   PERBAIKAN TAMPILAN COUNTER QUANTITY (TANPA KOTAK BOX)
+   ========================================================================== */
+
+/* 1. Hilangkan background abu-abu/border dari pembungkus utamanya */
 .quantity-control {
     display: flex;
     align-items: center;
-    gap: 12px;
-    background: #f1f5f9;
-    padding: 6px 12px;
-    border-radius: 20px;
+    gap: 12px;         /* Mengatur jarak renggang antara -, angka, dan + */
+    background: none;  /* Menghapus background box */
+    padding: 0;        /* Menghapus padding bawaan box */
+    border-radius: 0;
 }
-.quantity-btn {
-    background: none;
-    border: none;
-    color: #013220;
+
+/* 2. Mengatur tombol - dan + agar berbentuk lingkaran estetik minimalis */
+.quantity-btn, .btn-minus, .btn-plus {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e2e8f0; /* Garis tepi tipis warna abu-abu abu sangat soft */
+    background-color: #ffffff;
+    border-radius: 50%;        /* Membuat tombol bulat sempurna */
+    color: #333333;
+    font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
-    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+/* Efek saat tombol + atau - didekati kursor */
+.quantity-btn:hover, .btn-minus:hover, .btn-plus:hover {
+    background-color: var(--primary-color, #013220); /* Berubah jadi hijau kantin */
+    color: #ffffff; /* Teks berubah jadi putih */
+    border-color: var(--primary-color, #013220);
+}
+
+/* 3. MEMASUNG INPUT AGAR HANYA TAMPIL ANGKA POLOS TANPA BOX */
+.quantity-input {
+    width: 25px;       /* Lebar pas untuk 1-2 digit angka */
+    text-align: center;
+    border: none !important;      /* Memaksa menghilangkan semua border */
+    background: transparent !important; /* Memaksa agar latar belakangnya tembus pandang */
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333333;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none !important;  /* Menghilangkan bayangan box jika ada */
+    -moz-appearance: textfield;   /* Menghilangkan spinner atas-bawah di Firefox */
+}
+
+/* Menghilangkan panah naik-turun bawaan Chrome, Safari, dan Edge */
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .item-subtotal {

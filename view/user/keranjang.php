@@ -9,7 +9,6 @@
 </head>
 <body>
 
-    <!-- NAVBAR MAHASISWA -->
     <header>
         <nav class="navbar">
             <a href="#" class="nav-logo"><h2 class="logo-text">SIKANTIN</h2></a>
@@ -25,84 +24,153 @@
         </nav>
     </header>
 
-    <!-- FORM UTAMA CHECKOUT -->
-    <!-- Action form diarahkan ke file proses transaksi backend-mu -->
     <form action="proses_checkout.php" method="POST">
         
-        <!-- ID_Kantin dikirim sembunyi (hidden) karena model checkout() butuh data ini -->
         <input type="hidden" name="id_kantin" value="1"> 
 
         <div class="cart-container">
             
-            <!-- KIRI: DAFTAR ITEM MAKANAN -->
             <div class="cart-section">
                 <div class="cart-title">
                     <i class="fa-solid fa-store" style="color: #013220;"></i> Pesanan dari: <strong>Warung Berkah</strong>
                 </div>
 
-                <!-- Item 1 -->
-                <div class="cart-item">
+                <div class="cart-item" data-detail-id="101" data-harga="15000">
                     <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?w=200" class="cart-item-img" alt="Nasi Goreng">
                     <div class="cart-item-info">
                         <div class="item-name">Nasi Goreng Gila</div>
                         <div class="item-price">Rp 15.000</div>
                     </div>
                     <div class="quantity-control">
-                        <button type="button" class="quantity-btn">-</button>
-                        <span>2</span>
-                        <button type="button" class="quantity-btn">+</button>
+                        <button type="button" class="quantity-btn btn-minus">-</button>
+                        <input type="number" class="quantity-input" value="2" readonly>
+                        <button type="button" class="quantity-btn btn-plus">+</button>
                     </div>
-                    <div class="item-subtotal">Rp 30.000</div>
+                    <div class="item-subtotal">Rp <span class="item-subtotal-val">30.000</span></div>
                 </div>
 
-                <!-- Item 2 -->
-                <div class="cart-item">
+                <div class="cart-item" data-detail-id="102" data-harga="3000">
                     <img src="https://images.unsplash.com/photo-1497534446932-c925b458314e?w=200" class="cart-item-img" alt="Es Teh">
                     <div class="cart-item-info">
                         <div class="item-name">Es Teh Manis Segar</div>
                         <div class="item-price">Rp 3.000</div>
                     </div>
                     <div class="quantity-control">
-                        <button type="button" class="quantity-btn">-</button>
-                        <span>2</span>
-                        <button type="button" class="quantity-btn">+</button>
+                        <button type="button" class="quantity-btn btn-minus">-</button>
+                        <input type="number" class="quantity-input" value="2" readonly>
+                        <button type="button" class="quantity-btn btn-plus">+</button>
                     </div>
-                    <div class="item-subtotal">Rp 6.000</div>
+                    <div class="item-subtotal">Rp <span class="item-subtotal-val">6.000</span></div>
                 </div>
 
-                <!-- KOLOM CATATAN (Sesuai parameter ketiga di fungsi checkout) -->
                 <div class="note-group">
                     <label for="catatan"><i class="fa-solid fa-comment-dots"></i> Catatan untuk Penjual (Opsional)</label>
                     <textarea id="catatan" name="catatan" class="note-textarea" rows="2" placeholder="Contoh: Nasi gorengnya pedas bgt ya bang, es tehnya manis plastik aja..."></textarea>
                 </div>
             </div>
 
-            <!-- KANAN: RINGKASAN TOTAL & TOMBOL BAYAR -->
             <div class="summary-section">
                 <div class="cart-title">Ringkasan Pesanan</div>
                 
                 <div class="summary-row">
                     <span>Subtotal Menu</span>
-                    <span>Rp 36.000</span>
-                </div>
-                <div class="summary-row">
-                    <span>Biaya Aplikasi / Layanan</span>
-                    <span>Rp 1.000</span>
+                    <span>Rp <span id="subtotal-menu-val">36.000</span></span>
                 </div>
                 
-                <!-- Total Bayar (Sinkron dengan $cart['Total_Harga'] di database) -->
                 <div class="summary-row total-row">
                     <span>Total Pembayaran</span>
-                    <span>Rp 37.000</span>
+                    <span>Rp <span id="total-pembayaran-val">36.000</span></span>
                 </div>
 
                 <button type="submit" class="btn-checkout">
-                    <i class="fa-solid fa-wallet"></i> Konfirmasi & Pesang Sekarang
+                    <i class="fa-solid fa-wallet"></i> Konfirmasi & Pesan Sekarang
                 </button>
             </div>
 
         </div>
     </form>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const cartItems = document.querySelectorAll('.cart-item');
+
+            // Fungsi utama untuk mengkalkulasi ulang seluruh total belanja di layar
+            function hitungUlangTotal() {
+                let totalSubtotalMenu = 0;
+
+                document.querySelectorAll('.cart-item').forEach(item => {
+                    const qty = parseInt(item.querySelector('.quantity-input').value);
+                    const harga = parseInt(item.getAttribute('data-harga'));
+                    totalSubtotalMenu += (qty * harga);
+                });
+
+                // Update teks Subtotal Menu di sebelah kanan
+                document.getElementById('subtotal-menu-val').innerText = totalSubtotalMenu.toLocaleString('id-ID');
+                
+                // LANGSUNG UPDATE: Total Pembayaran disamakan dengan totalSubtotalMenu (tanpa tambahan biayaLayanan)
+                document.getElementById('total-pembayaran-val').innerText = totalSubtotalMenu.toLocaleString('id-ID');
+            }
+
+            cartItems.forEach(item => {
+                const btnMinus = item.querySelector('.btn-minus');
+                const btnPlus = item.querySelector('.btn-plus');
+                const qtyInput = item.querySelector('.quantity-input');
+                const subtotalText = item.querySelector('.item-subtotal-val');
+                
+                const detailId = item.getAttribute('data-detail-id');
+                const harga = parseInt(item.getAttribute('data-harga'));
+
+                // Fungsi kirim data asinkron (AJAX) ke Backend
+                async function kirimKeBackend(aksi) {
+                    try {
+                        let respon = await fetch('update_keranjang.php', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            body: `id_detail=${detailId}&action=${aksi}`
+                        });
+                        let data = await respon.json();
+                        
+                        if (!data.success) {
+                            alert('Gagal memperbarui data di server.');
+                        }
+                    } catch (eror) {
+                        console.error('Koneksi ke backend bermasalah:', eror);
+                    }
+                }
+
+                // Tombol TAMBAH (+)
+                btnPlus.addEventListener('click', function() {
+                    let angkaSkrg = parseInt(qtyInput.value);
+                    angkaSkrg += 1;
+                    qtyInput.value = angkaSkrg;
+
+                    subtotalText.innerText = (angkaSkrg * harga).toLocaleString('id-ID');
+                    hitungUlangTotal();
+                    kirimKeBackend('tambah');
+                });
+
+                // Tombol KURANG (-)
+                btnMinus.addEventListener('click', function() {
+                    let angkaSkrg = parseInt(qtyInput.value);
+                    
+                    if (angkaSkrg > 1) {
+                        angkaSkrg -= 1;
+                        qtyInput.value = angkaSkrg;
+
+                        subtotalText.innerText = (angkaSkrg * harga).toLocaleString('id-ID');
+                        hitungUlangTotal();
+                        kirimKeBackend('kurang');
+                    } else {
+                        if (confirm('Hapus menu ini dari keranjang belanja?')) {
+                            item.remove();
+                            hitungUlangTotal();
+                            kirimKeBackend('hapus');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

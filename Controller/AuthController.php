@@ -20,10 +20,10 @@ class AuthController {
                 elseif ($user['Role_User'] === 'Admin') header("Location: index.php?page=admin-dashboard");
             } else {
                 $error = "Email atau password salah!";
-                require_once 'app/views/login_view.php'; // Menunggu
+                require_once 'view/user/login.php'; // Menunggu
             }
         } else {
-            require_once 'app/views/login_view.php'; // Menunggu
+            require_once 'view/user/login.php'; // Menunggu
         }
     }
 

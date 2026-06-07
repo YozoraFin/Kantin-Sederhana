@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'config/database.php';
+require_once 'Config/config.php';
 
 require_once 'Controller/AuthController.php';
 require_once 'Controller/PembeliController.php';
@@ -13,12 +13,12 @@ $page = $_GET['page'] ?? 'login';
 if (!isset($_SESSION['user_id']) && $page !== 'login' && $page !== 'proses-login') {
     header("Location: index.php?page=login");
     exit;
-}
-
-switch ($page) {
-    case 'login':
-    case 'proses-login':
-    case 'logout':
+    }
+    
+    switch ($page) {
+        case 'login':
+            case 'proses-login':
+                case 'logout':
     case 'ganti-password':
         require_once 'Controller/AuthController.php';
         $auth = new AuthController($conn);
