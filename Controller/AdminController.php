@@ -30,6 +30,12 @@ class AdminController {
         header("Location: index.php?page=admin-dashboard");
     }
 
+    public function editUserPage() {
+        $id = $_GET['id'];
+        $user = $this->userM->getDetailUser($id);
+        require_once ''; // Belum
+    }
+
     public function manageKantin() {
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
             if(isset($_POST['create'])) $this->kantinM->createKantin($_POST['nama'], $_POST['telp'], $_POST['id_user'], $_POST['status']);

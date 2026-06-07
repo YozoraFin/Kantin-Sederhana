@@ -40,6 +40,12 @@ class PenjualController {
         }
     }
 
+    public function detailMenu() {
+        $idProduk = $_GET['id_produk'];
+        $data = $this->productM->getProductById($idProduk);
+        require_once ''; // Belum
+    }
+
     public function editMenu() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->productM->updateProduct($_POST['id_produk'], $_POST['nama'], $_POST['harga'], $_POST['id_kategori'], $_POST['deskripsi']);

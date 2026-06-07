@@ -34,6 +34,13 @@ class UserModel {
         $stmt = $this->db->prepare("INSERT INTO users (Nama_User, Email_User, password, Alamat_User, Role_User) VALUES (?, ?, ?, ?, ?)");
         return $stmt->execute([$nama, $email, $hashedPassword, $alamat, $role]);
     }
+
+    public function getDetailUser($id) {
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE ID_User = ?");
+        $stmt->execute([$id]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $user;
+    }
     public function updateUser($id, $nama, $email, $alamat, $role) {
         $stmt = $this->db->prepare("UPDATE users SET Nama_User=?, Email_User=?, Alamat_User=?, Role_User=? WHERE ID_User=?");
         return $stmt->execute([$nama, $email, $alamat, $role, $id]);
