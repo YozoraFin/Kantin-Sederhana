@@ -48,6 +48,11 @@ class PembeliController {
         require_once 'view/user/keranjang.php'; // 
     }
 
+    public function updateTotalCartItem() {
+        $this->cartM->updateTotalDetailCart($_GET['cartId'], $_GET['id_detail'], $_GET['Subtotal'], $_GET['Jumlah']);
+        header("Location: index.php?page=keranjang");
+    }
+
     public function deleteCartItem() {
         $this->cartM->deleteItem($_GET['id_detail']);
         header("Location: index.php?page=keranjang");

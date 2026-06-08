@@ -47,7 +47,7 @@
                         $subtotalItem = $item['Jumlah'] * $item['Harga_Produk'];
                         $totalBelanjaan += $subtotalItem;
                     ?>
-                        <div class="cart-item" data-detail-id="<?= $item['ID_Detail_Keranjang'] ?? $item['id_detail'] ?>" data-harga="<?= $item['Harga_Produk'] ?>">
+                        <div class="cart-item" data-detail-id="<?= $item['ID_Detail_Keranjang'] ?? $item['id_detail'] ?>" data-harga="<?= $item['Harga_Produk'] ?>" data-cart-id="<?= $item['ID_Keranjang'] ?>">
                             <img src="<?= !empty($item['Produk_url']) ? htmlspecialchars($item['Produk_url']) : 'Kantin Upn.jpeg' ?>" class="cart-item-img" alt="<?= htmlspecialchars($item['Nama_Produk']) ?>">
                             
                             <div class="cart-item-info">
@@ -60,6 +60,7 @@
                                 <input type="number" class="quantity-input" value="<?= $item['Jumlah'] ?>" readonly>
                                 <button type="button" class="quantity-btn btn-plus">+</button>
                             </div>
+                            <div class="harga_produk" hidden><?= $item['Harga_Produk'] ?></div>
                             
                             <div class="item-subtotal">Rp <span class="item-subtotal-val"><?= number_format($subtotalItem, 0, ',', '.') ?></span></div>
                         </div>
@@ -124,17 +125,16 @@
                 
                 const detailId = item.getAttribute('data-detail-id');
                 const harga = parseInt(item.getAttribute('data-harga'));
+                const idCart = parseInt(item.getAttribute('data-cart-id'));
 
                 // SINKRONISASI: Mengubah target asinkron AJAX ke route index.php agar ditangkap controller
                 async function kirimKeBackend(aksi) {
                     try {
                         let targetUrl = '';
-                        if (aksi === 'tambah') {
-                            // Kamu bisa buatkan fungsi update qty asinkron jika diperlukan, 
-                            // atau biarkan hitungan UI berjalan sementara waktu.
+                        if (aksi === 'update') {
+                            window.location.href = `index.php?page=update-keranjang&id_detail=${detailId}&Jumlah=${qtyInput.value}&Subtotal=${qtyInput.value * harga}&cartId=${idCart}`
                             return; 
                         } else if (aksi === 'hapus') {
-                            // SINKRONISASI: jika porsi 1 dikurangi, lempar langsung ke case 'hapus-keranjang'
                             window.location.href = `index.php?page=hapus-keranjang&id_detail=${detailId}`;
                             return;
                         }
@@ -149,7 +149,7 @@
                     qtyInput.value = angkaSkrg;
                     subtotalText.innerText = (angkaSkrg * harga).toLocaleString('id-ID');
                     hitungUlangTotal();
-                    kirimKeBackend('tambah');
+                    kirimKeBackend('update');
                 });
 
                 btnMinus.addEventListener('click', function() {
@@ -159,7 +159,7 @@
                         qtyInput.value = angkaSkrg;
                         subtotalText.innerText = (angkaSkrg * harga).toLocaleString('id-ID');
                         hitungUlangTotal();
-                        kirimKeBackend('kurang');
+                        kirimKeBackend('update');
                     } else {
                         if (confirm('Hapus menu ini dari keranjang belanja?')) {
                             kirimKeBackend('hapus');

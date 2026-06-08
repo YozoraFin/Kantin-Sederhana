@@ -112,7 +112,7 @@
                                 </div>
 
                                 <div class="recent-price">
-                                    Rp <?= number_format($past_order['Total_Harga'] ?? 0, 0, ',', '.') ?>
+                                    Rp <?= number_format($past_order['Total_Bayar'] ?? 0, 0, ',', '.') ?>
                                 </div>
                             </div>
                         <?php endforeach; ?>

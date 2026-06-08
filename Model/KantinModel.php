@@ -50,9 +50,9 @@ class KantinModel {
         return $stmt->execute([$nama, $telp, $idUser, $status, $kantinurl]);
     }
 
-    public function updateKantin($id, $nama, $telp, $status) {
-        $stmt = $this->db->prepare("UPDATE kantin SET Nama_Kantin=?, Telp_Kantin=?, Status_Buka=? WHERE ID_Kantin=?");
-        return $stmt->execute([$nama, $telp, $status, $id]);
+    public function updateKantin($id, $nama, $telp, $status, $kantinurl) {
+        $stmt = $this->db->prepare("UPDATE kantin SET Nama_Kantin=?, Telp_Kantin=?, Status_Buka=?, Kantin_url=? WHERE ID_Kantin=?");
+        return $stmt->execute([$nama, $telp, $status, $kantinurl, $id]);
     }
     public function deleteKantin($id) {
         $stmt = $this->db->prepare("DELETE FROM kantin WHERE ID_Kantin = ?");

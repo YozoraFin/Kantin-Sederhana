@@ -29,6 +29,11 @@ class UserModel {
         return $this->db->query("SELECT * FROM users")->fetchAll(PDO::FETCH_ASSOC);
     }
     public function createUser($nama, $email, $password, $alamat, $role) {
+        if(strlen($password) < 6) {
+            echo "<script>alert('Password minimal 6 karakter!'); history.back()</script>";
+            exit;
+        } 
+
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         $stmt = $this->db->prepare("INSERT INTO users (Nama_User, Email_User, password, Alamat_User, Role_User) VALUES (?, ?, ?, ?, ?)");

@@ -58,6 +58,10 @@ if (!isset($_SESSION['user_id']) && $page !== 'login' && $page !== 'proses-login
         checkRole("Pembeli");
         (new PembeliController($conn))->deleteCartItem();
         break;
+    case 'update-keranjang':
+        checkRole("Pembeli");
+        (new PembeliController($conn))->updateTotalCartItem();
+        break;
     case 'checkout':
         checkRole("Pembeli");
         (new PembeliController($conn))->checkout();
