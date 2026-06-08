@@ -30,7 +30,7 @@ class PembeliController {
         $idKantin = $_GET['id'];
         $kantin = $this->kantinM->getKantinById($idKantin);
         $menus = $this->productM->getMenuByKantin($idKantin);
-        require_once 'view/user/tenant.php'; // tak tambahin detail kantin.php
+        require_once 'view/user/detail_kantin.php'; // tak tambahin detail kantin.php
     }
 
     public function addToCart() {
@@ -45,7 +45,7 @@ class PembeliController {
 
     public function cart() {
         $items = $this->cartM->getCartContent($_SESSION['user_id']);
-        require_once 'app/views/pembeli/keranjang.php'; // 
+        require_once 'view/user/keranjang.php'; // 
     }
 
     public function deleteCartItem() {

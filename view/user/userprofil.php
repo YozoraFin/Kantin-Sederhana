@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="../src/style.css">
+    <link rel="stylesheet" href="/Kantin-Sederhana/view/src/style.css">
     <title>Home - SIKANTIN</title>
 </head>
 <body>
@@ -23,12 +23,12 @@
                     <a href="tenant.php" class="nav-link">Tenant</a>
                 </li>
                 <li class="nav-item">
-                    <a href="pesanan.php" class="nav-link">Pesanan</a>
+                    <a href="pesanan.php" class="nav-link"></a>
                 </li>
             </ul>
 
             <div class="nav-actions">
-                <a href="profil.php" class="nav-profil">
+                <a href="userprofil.php" class="nav-profil">
                     <i class="fa-solid fa-circle-user"></i>
                 </a>
 

@@ -8,42 +8,43 @@
 </head>
 <body>
 
-<div class="container" style="max-width: 600px; margin-top: 50px;">
-    <div class="card">
-        <h2>Update Akun: <?= htmlspecialchars($update['Nama_User']) ?></h2>
-        <p style="color: #666; font-size: 14px;">Silakan perbarui data pengguna di bawah ini.</p>
-        <hr style="border: 0; border-top: 1px solid #eee; margin-bottom: 20px;">
+<div class="update-container">
+    <div class="update-card">
+        <h2>Update Akun: <?= htmlspecialchars($user['Nama_User'] ?? 'Pengguna') ?></h2>
+        <p class="subtitle">Silakan perbarui data pengguna di bawah ini.</p>
+        <hr class="divider">
         
         <form action="/Kantin-Sederhana/index.php?page=admin-action-user" method="POST">
-            <input type="hidden" name="id_user" value="<?= $updateUser['ID_User'] ?>">
+            <input type="hidden" name="id" value="<?= $user['ID_User'] ?? '' ?>">
 
             <div class="form-group">
                 <label for="nama">Nama Lengkap</label>
-                <input type="text" id="nama" name="nama" value="<?= htmlspecialchars($updateUser['Nama_User']) ?>" required>
+                <input type="text" id="nama" name="nama" value="<?= htmlspecialchars($user['Nama_User'] ?? '') ?>" required>
             </div>
             
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" value="<?= htmlspecialchars($updateUser['Email_User']) ?>" required>
+                <input type="email" id="email" name="email" value="<?= htmlspecialchars($user['Email_User'] ?? '') ?>" required>
             </div>
             
             <div class="form-group">
                 <label for="alamat">Alamat</label>
-                <textarea id="alamat" name="alamat" rows="3" required><?= htmlspecialchars($userToEdit['Alamat_User']) ?></textarea>
+                <textarea id="alamat" name="alamat" rows="3" required><?= htmlspecialchars($user['Alamat_User'] ?? '') ?></textarea>
             </div>
             
             <div class="form-group">
                 <label for="role">Hak Akses (Role)</label>
                 <select id="role" name="role" required>
-                    <option value="Admin" <?= $userToEdit['Role_User'] === 'Admin' ? 'selected' : '' ?>>Admin</option>
-                    <option value="Penjual" <?= $userToEdit['Role_User'] === 'Penjual' ? 'selected' : '' ?>>Penjual</option>
-                    <option value="Pembeli" <?= $userToEdit['Role_User'] === 'Pembeli' ? 'selected' : '' ?>>Pembeli</option>
+                    <?php $currentRole = $user['Role_User'] ?? ''; ?>
+                    <option value="Admin" <?= $currentRole === 'Admin' ? 'selected' : '' ?>>Admin</option>
+                    <option value="Penjual" <?= $currentRole === 'Penjual' ? 'selected' : '' ?>>Penjual</option>
+                    <option value="Pembeli" <?= $currentRole === 'Pembeli' ? 'selected' : '' ?>>Pembeli</option>
                 </select>
             </div>
             
-            <div style="margin-top: 20px;">
-                <button type="submit" name="update" class="btn" style="background-color: #2ecc71;">Simpan Perubahan</button>
-                <a href="/Kantin-Sederhana/index.php?page=admin-dashboard" class="btn" style="background-color: #95a5a6; text-decoration: none; display: inline-block; text-align: center;">Batal</a>
+            <div class="btn-group">
+                <button type="submit" name="update" class="btn btn-save">Simpan Perubahan</button>
+                <a href="/Kantin-Sederhana/index.php?page=admin-dashboard" class="btn btn-cancel">Batal</a>
             </div>
         </form>
     </div>

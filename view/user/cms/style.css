@@ -15,6 +15,12 @@ h1, h2 {
     color: #2c3e50; 
 }
 
+.nav-actions {
+    position: absolute;
+    top: 20px;
+    right: 0;
+}
+
 /* Grid Layout Dashboard */
 .dashboard-grid { 
     display: grid; 
@@ -97,6 +103,61 @@ table th {
     background-color: #f8f9fa; 
 }
 
+/* Header / Tombol Klik */
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    font-size: 0.82rem;
+    color: #666;
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 1px dashed #e0e0e0;
+    transition: color 0.2s ease;
+}
+
+.accordion-header:hover {
+    color: var(--primary-color, #013220);
+}
+
+/* Animasi Icon Panah */
+.accordion-header .arrow-icon {
+    font-size: 0.75rem;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Konten Deskripsi  */
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accordion-content p {
+    padding: 8px 2px 4px 2px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: #555;
+    margin: 0;
+}
+
+/* SYSTEM CORE ACCORDION */
+.accordion-checkbox:checked ~ .accordion-header {
+    color: var(--primary-color, #013220);
+    font-weight: 600;
+}
+
+/* Memutar Panah Menghadap Ke Atas */
+.accordion-checkbox:checked ~ .accordion-header .arrow-icon {
+    transform: rotate(-180deg);
+}
+
+/* Membuka Tinggi Wadah Deskripsi Menyesuaikan Isi Teks Secara Otomatis */
+.accordion-checkbox:checked ~ .accordion-content {
+    max-height: 120px; /* Batas maksimal tinggi slide, pas untuk deskripsi kuliner */
+}
+
 /* Badge Role */
 .badge { 
     padding: 5px 10px; 
@@ -119,6 +180,111 @@ table th {
 .badge-pembeli { 
     background-color: #2ecc71; 
     color: white; 
+}
+
+/* Container & Card Styling */
+.update-container {
+    width: 100%;
+    max-width: 600px;
+}
+
+.update-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.update-card h2 {
+    color: #1e3a5f;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.update-card .subtitle {
+    color: #666666;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.update-card .divider {
+    border: 0;
+    border-top: 1px solid #eeeeee;
+    margin-bottom: 20px;
+}
+
+/* Form Group & Inputs */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #333333;
+    background-color: #ffffff;
+    transition: border-color 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+/* Buttons Group Styling */
+.btn-group {
+    margin-top: 25px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 11px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    transition: opacity 0.2s ease;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.btn-save {
+    background-color: #2ecc71;
+    color: #ffffff;
+    flex: 2;
+}
+
+.btn-cancel {
+    background-color: #95a5a6;
+    color: #ffffff;
+    flex: 1;
 }
 
 /* Responsive Grid untuk Layar Kecil */
