@@ -1,184 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-<link rel="stylesheet" href="../src/style.css">
- <title>Home - SIKANTIN</title>
- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="/Kantin-Sederhana/view/src/style.css">
+    <title>Home - SIKANTIN</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
 <header>
- <nav class="navbar">
-<a href="#" class="nav-logo">
-<h2 class="logo-text">DASHBOARD PENJUAL</h2>
- </a>
+    <nav class="navbar">
+        <a href="#" class="nav-logo">
+            <h2 class="logo-text">DASHBOARD PENJUAL</h2>
+        </a>
 
- <ul class="nav-menu">
-<li class="nav-item">
-<a href="penjual.php" class="nav-link active">Home</a>
- </li>
- <li class="nav-item">
- <a href="listmenu.php" class="nav-link">List Menu</a>
- </li>
- <li class="nav-item">
-<a href="riwayatpesananpenjual.php" class="nav-link">Pesanan</a>
- </li>
- </ul>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="index.php?page=penjual-dashboard" class="nav-link active">Home</a>
+            </li>
+            <li class="nav-item">
+                <a href="index.php?page=penjual-menu" class="nav-link">List Menu</a>
+            </li>
+        </ul>
 
- <div class="nav-actions">
- <a href="profil.php" class="nav-profil">
- <i class="fa-solid fa-circle-user"></i>
-</a>
- </div>
- </nav>
- </header>
-
- <main class="seller-container">
-        <div class="seller-page-header">
-            <h2>Laporan Penjualan Mingguan</h2>
-            <p>Pantau performa tokomu minggu ini</p>
+        <div class="nav-actions">
+                <a href="index.php?page=logout" class="nav-profil" title="Logout" onclick="return confirm('Apakah Anda yakin ingin keluar dari aplikasi SIKANTIN?')">
+                    <i class="fa-solid fa-right-from-bracket" style="font-size: 20px; color: #fff;"></i>
+                </a>
         </div>
+    </nav>
+</header>
 
-        <div class="seller-content-grid">
-            
-            <div class="seller-main-content">
-                <div class="seller-chart-box">
-                    <div class="chart-title">
-                        <i class="fa-solid fa-chart-line"></i> Grafik Omset Penjualan
-                    </div>
-                    <div class="canvas-wrapper">
-                        <canvas id="weeklySalesChart"></canvas>
-                    </div>
-                </div>
+<main class="seller-container">
+    <div class="seller-page-header">
+        <h2>Laporan Penjualan</h2>
+        <p>Pantau performa tokomu</p>
+    </div>
 
-                <div class="seller-summary-box">
-                    <div class="summary-card">
-                        <span class="summary-label">Total Pendapatan</span>
-                        <h3 class="summary-value text-green">Rp 1.450.000</h3>
-                        <span class="summary-sub">Minggu ini</span>
-                    </div>
-                    <div class="summary-card">
-                        <span class="summary-label">Pesanan Selesai</span>
-                        <h3 class="summary-value text-blue">98 Pesanan</h3>
-                        <span class="summary-sub">Rata-rata 14 pesanan/hari</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="seller-status-sidebar">
-                <div class="status-box-title">
-                    <i class="fa-solid fa-utensils"></i> Status Masakan Live
-                </div>
-                
-                <div class="order-status-list">
-                    <div class="order-status-item" id="order-101">
-                        <div class="order-info">
-                            <span class="order-id">#101</span>
-                            <p class="order-menu">Nasi Goreng Ayam (2x)</p>
-                            <span class="status-badge pending">Sedang Dimasak</span>
-                        </div>
-                        <button class="btn-check-done" onclick="completeOrder('101')">
-                            <i class="fa-solid fa-check"></i>
-                        </button>
-                    </div>
-
-                    <div class="order-status-item" id="order-102">
-                        <div class="order-info">
-                            <span class="order-id">#102</span>
-                            <p class="order-menu">Mie Goreng Spesial (1x)</p>
-                            <span class="status-badge pending">Sedang Dimasak</span>
-                        </div>
-                        <button class="btn-check-done" onclick="completeOrder('102')">
-                            <i class="fa-solid fa-check"></i>
-                        </button>
-                    </div>
-
-                    <div class="order-status-item" id="order-103">
-                        <div class="order-info">
-                            <span class="order-id">#103</span>
-                            <p class="order-menu">Es Teh Manis (3x)</p>
-                            <span class="status-badge pending">Sedang Dimasak</span>
-                        </div>
-                        <button class="btn-check-done" onclick="completeOrder('103')">
-                            <i class="fa-solid fa-check"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </main>
-<script>
-const ctx = document.getElementById('weeklySalesChart').getContext('2d');
-
-const gradientPrimary = ctx.createLinearGradient(0, 0, 0, 300);
-gradientPrimary.addColorStop(0, '#013220'); // Hijau tua SIKANTIN sesuai variabelmu
-gradientPrimary.addColorStop(1, '#11b237'); // Hijau terang
-
-new Chart(ctx, {
-        type: 'bar',
-        data: {
-        labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
-        datasets: [{
-        label: 'Pendapatan (Rp)',
-         data: [150000, 230000, 180000, 310000, 250000, 190000, 140000], 
-        backgroundColor: gradientPrimary,
-        borderRadius: 6,
-        borderWidth: 0
-        }]
-    },
-        options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-        legend: { display: false }
-    },
-        scales: {
-    y: {
-beginAtZero: true,
- ticks: {
- color: '#555',
-callback: function(value) {
- return 'Rp ' + value.toLocaleString('id-ID');
-}
- },
- grid: { color: '#eef2f5' }
-},
- x: {
- ticks: { color: '#555' },
- grid: { display: false }
- }
- }
- }
- });
-
- // Fungsi untuk memproses tombol centang masakan selesai
-function completeOrder(orderId) {
-    // Ambil element item pesanan berdasarkan ID
-    const orderItem = document.getElementById('order-' + orderId);
+    <div class="status-kantin-container" style="display: flex; align-items: center; gap: 15px; background: white; padding: 12px 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); width: fit-content; margin-bottom: 25px;">
+        <span style="font-weight: bold; font-size: 0.95rem; color: #333;">Status Operasional:</span>
+            <label class="switch-button-wrapper" style="position: relative; display: inline-block; width: 50px; height: 26px; cursor: pointer;">
+                <input type="checkbox" id="statusSakelar" <?= (isset($kantin['Status_Buka']) && $kantin['Status_Buka'] == 1) ? 'checked' : '' ?> style="opacity: 0; width: 0; height: 0;">
+                    <?php if (isset($kantin['Status_Buka']) && $kantin['Status_Buka'] == 1): ?>
+                        <span class="slider-round slider-buka"></span>
+                    <?php else: ?>
+                        <span class="slider-round slider-tutup"></span>
+                    <?php endif; ?>
+            </label>
     
-    if (orderItem) {
-        // Tambahkan class penanda selesai (mengubah background box menjadi hijau soft)
-        orderItem.classList.add('is-done');
-        
-        // Cari element badge status di dalamnya, lalu ubah teks dan warnanya
-        const badge = orderItem.querySelector('.status-badge');
-        if (badge) {
-            badge.textContent = 'Masakan Selesai';
-            badge.className = 'status-badge success'; // Ganti class ke sukses (hijau)
+        <span style="font-weight: bold; font-size: 0.9rem; color: <?= (isset($kantin['Status_Buka']) && $kantin['Status_Buka'] == 1) ? '#28a745' : '#dc3545' ?>;">
+            <?= (isset($kantin['Status_Buka']) && $kantin['Status_Buka'] == 1) ? 'BUKA (MENERIMA PESANAN)' : 'TUTUP (STAN TIDAK AKTIF)' ?>
+        </span>
+    </div>
+
+
+    <script>
+        document.getElementById('statusSakelar').addEventListener('change', function() {
+        window.location.href = 'index.php?page=penjual-toggle-status';
+        });
+    </script>
+    <div class="seller-content-grid">
+        <div class="seller-summary-box">
+            <div class="summary-card">
+                <span class="summary-label">Total Pendapatan</span>
+                    <h3 class="summary-value text-green">Rp <?= number_format($revenue ?? 0, 0, ',', '.') ?></h3>
+                <span class="summary-sub">Semua transaksi sukses</span>
+            </div>
+            <div class="summary-card">
+                <span class="summary-label">Pesanan Masak (Live)</span>
+                    <h3 class="summary-value text-blue"><?= count($incoming ?? []) ?> Pesanan</h3>
+                <span class="summary-sub">Perlu segera disajikan</span>
+            </div>
+        </div>
+    </div>
+
+        <div class="seller-status-sidebar">
+            <div class="status-box-title">
+                <i class="fa-solid fa-utensils"></i> Status Masakan Live
+            </div>
+            
+            <div class="order-status-list">
+                <?php if (!empty($incoming)): ?>
+                    <?php foreach ($incoming as $order): ?>
+                        <div class="order-status-item" id="order-<?= $order['ID_Transaksi'] ?>">
+                            <div class="order-info">
+                                <span class="order-id">Nota #<?= $order['ID_Transaksi'] ?></span>
+                                <!-- <p class="order-menu"><?= htmlspecialchars($order['Nama_Menu'] ?? 'Menu Pesanan') ?></p> -->
+                                <span class="status-badge pending"><?= htmlspecialchars($order['Status_Pesanan'] ?? 'Proses') ?></span>
+                            </div>
+                            <button class="btn-check-done" onclick="completeOrder('<?= $order['ID_Transaksi'] ?>')">
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div style="text-align: center; color: #888; padding: 40px 10px; font-style: italic;">
+                        <i class="fa-solid fa-bell-slashed" style="font-size: 28px; margin-bottom: 8px; color: #ccc;"></i>
+                        <p>Belum ada masakan yang perlu diproses.</p>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+    <script>
+        const ctx = document.getElementById('weeklySalesChart').getContext('2d');
+        const gradientPrimary = ctx.createLinearGradient(0, 0, 0, 300);
+        gradientPrimary.addColorStop(0, '#013220'); 
+    gradientPrimary.addColorStop(1, '#11b237'); 
+
+    function completeOrder(orderId) {
+    fetch('/Kantin-Sederhana/index.php?page=penjual-status-pesanan'+'&id_trx=' + orderId + '&status=Selesai' , {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const orderItem = document.getElementById('order-' + orderId);
+            if (orderItem) {
+                orderItem.classList.add('is-done');
+                orderItem.style.background = '#e8f5e9'; 
+                
+                const badge = orderItem.querySelector('.status-badge');
+                if (badge) {
+                    badge.textContent = 'Selesai';
+                    badge.className = 'status-badge success'; 
+                }
+                
+                const button = orderItem.querySelector('.btn-check-done');
+                if (button) {
+                    button.removeAttribute('onclick');
+                    button.style.opacity = '0.4';
+                }
+            }
+        } else {
+            alert('Gagal memperbarui data dapur: ' + data.message);
         }
-        
-        // Disable tombol centangnya agar tidak bisa diklik berulang-ulang
-        const button = orderItem.querySelector('.btn-check-done');
-        if (button) {
-            button.removeAttribute('onclick');
-        }
-    }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Terjadi kendala jaringan komunikasi sistem kantin.');
+    });
 }
- </script>
+</script>
 </body>
 </html>
-

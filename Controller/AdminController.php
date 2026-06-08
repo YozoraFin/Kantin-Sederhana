@@ -33,12 +33,12 @@ class AdminController {
     public function editUserPage() {
         $id = $_GET['id'];
         $user = $this->userM->getDetailUser($id);
-        require_once ''; // Belum
+        require_once 'view/user/cms/updateuser.php'; // Belum
     }
 
     public function manageKantin() {
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if(isset($_POST['create'])) $this->kantinM->createKantin($_POST['nama'], $_POST['telp'], $_POST['id_user'], $_POST['status']);
+            if(isset($_POST['create'])) $this->kantinM->createKantin($_POST['nama'], $_POST['telp'], $_POST['id_user'], $_POST['status'], $_POST['Kantin_url']);
             if(isset($_POST['update'])) $this->kantinM->updateKantin($_POST['id'], $_POST['nama'], $_POST['telp'], $_POST['status']);
         }
         if(isset($_GET['delete_kantin'])) $this->kantinM->deleteKantin($_GET['delete_kantin']);

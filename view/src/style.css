@@ -60,51 +60,72 @@ display: block;
 
 /* Navbar Styling */
 header {
-background: var(--primary-color);
+    background: var(--primary-color);
+    width: 100%;
 }
 
 header .navbar {
-display: flex;
-padding: 20px 10%; 
-align-items: center;
-justify-content: space-between;
+    display: flex;
+    padding: 20px 10%; 
+    align-items: center;
+    justify-content: space-between; /* Membuat Logo di kiri, Menu di tengah, Aksi di kanan */
+}
+
+.navbar .nav-logo {
+    text-decoration: none;
 }
 
 .navbar .nav-logo .logo-text {
-color: var(--white-color);
+    color: var(--white-color);
+    margin: 0;
 }
 
 .navbar .nav-menu {
-display: flex;
-gap: 20px; 
+    display: flex;
+    gap: 30px; 
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
 }
-
-.nav-profil {
-padding: 10px 5px;
-color: var(--white-color);
-font-size: 1.8rem;
-transition: 0.3s;
-}
-
 
 .navbar .nav-menu .nav-link {
-padding: 10px 15px;
-color: var(--white-color);
-font-weight: var(--font-weight-medium);
-transition: 0.3s;
+    text-decoration: none;
+    color: var(--white-color);
+    font-weight: var(--font-weight-medium);
+    transition: 0.3s ease;
 }
 
 .navbar .nav-menu .nav-link:hover {
-color: var(--yellow-color);
+    color: var(--yellow-color);
 }
 
+/* Wadah Aksi Bagian Kanan Navbar */
 .nav-actions {
     display: flex;
     align-items: center;
-    gap: 20px;
+gap: 40px; 
 }
 
-/* Profil & Keranjang */
+/* Penyelarasan Ikon Keranjang & Logout */
+/* .keranjang,
+.nav-logout {
+    color: var(--white-color);
+    font-size: 10rem; 
+    text-decoration: none;
+    /* display: inline-flex; */
+    /* align-items: center; */
+    /* transition: 0.3s ease; */
+    /* cursor: pointer; */
+/* } */ */
+
+/* Efek Hover Cantik saat kursor mendekat */
+.nav-actions a:hover {
+    color: var(--yellow-color); 
+    transform: scale(1.1);     
+}
+
+/* /* Profil & Keranjang
 .nav-profil,
 .keranjang {
     color: var(--white-color);
@@ -114,8 +135,8 @@ color: var(--yellow-color);
 
 .navbar .nav-actions a:hover {
     color: var(--yellow-color); 
-    transform: scale(1.08);     
-}
+    transform: scale(1.08);      */
+/* } */ */
 
 /* ===== DASHBOARD HOME ===== */
 .dashboard {
@@ -469,9 +490,9 @@ color: var(--yellow-color);
     background-color: #27ae60; /* Hijau agak gelap saat di-hover */
 }
 
-/* ==========================================================================
-   ADMIN DASHBOARD STYLING (DARK MODE)
-   ========================================================================== */
+/* 
+   ADMIN DASHBOARD STYLING 
+    */
 .admin-dashboard-page {
     background-color: #1b5c41 ; /* Memaksa background gelap khusus halaman ini */
     color: #ffffff;
@@ -687,9 +708,9 @@ color: var(--yellow-color);
     color: #999;
 }
 
-/* ==========================================================================
+/* 
    DASHBOARD CONTENT SELLER STYLING (UPDATED)
-   ========================================================================== */
+    */
 .seller-container {
     max-width: var(--site-max-width, 1300px);
     margin: 0 auto;
@@ -900,9 +921,9 @@ color: var(--yellow-color);
     }
 }
 
-/* ==========================================================================
-   DAFTAR MENU MAKANAN (GRID CARD SYSTEM)
-   ========================================================================== */
+/* 
+   DAFTAR MENU MAKANAN 
+   */
 .menu-container {
     max-width: var(--site-max-width, 1300px);
     margin: 0 auto;
@@ -1349,22 +1370,78 @@ color: var(--yellow-color);
     margin: 0 auto 15px auto;
 }
 
-/* FITUR-KERANJANG */
+.accordion-checkbox {
+    display: none !important;
+}
 
-/* ==========================================
+/* 2. Desain Header Label */
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    font-size: 0.82rem;
+    color: #666;
+    cursor: pointer;
+    border-bottom: 1px dashed #e0e0e0;
+    user-select: none;
+}
+
+/* 3. Efek Hover Ringan pada Tombol Lihat Deskripsi */
+.accordion-header:hover {
+    color: #013220;
+}
+
+
+.accordion-content {
+    max-height: 0 !important;       
+    opacity: 0;                    
+    overflow: hidden !important;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                opacity 0.3s ease, 
+                padding 0.3s ease !important; 
+    padding: 0;                    
+}
+
+.accordion-content p {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: #555;
+    margin: 0;
+}
+
+/* 
+   KONDISI KETIKA ACCORDION DI-KLIK 
+ */
+
+/* 6. Meluncur Buka Konten Deskripsi */
+.accordion-checkbox:checked ~ .accordion-content {
+    max-height: 100px !important;   
+    opacity: 1;                    
+    padding: 8px 0;                 
+    overflow-y: auto !important;    
+}
+
+/* 7. Animasi Memutar Icon Panah (Chevron) */
+.accordion-checkbox:checked ~ .accordion-header .arrow-icon {
+    transform: rotate(-180deg) !important;
+    color: #013220;
+}
+
+/* 
    STYLE HALAMAN KERANJANG & CHECKOUT SIKANTIN
-   ========================================== */
+    */
 .cart-container {
     max-width: 1000px;
     margin: 40px auto;
     padding: 0 20px;
     display: grid;
-    grid-template-columns: 1.6fr 1fr; /* Membagi layar: kiri item, kanan ringkasan */
+    grid-template-columns: 1.6fr 1fr; 
     gap: 30px;
 }
 
 @media (max-width: 768px) {
-    .cart-container { grid-template-columns: 1fr; } /* Stack ke bawah kalau di HP */
+    .cart-container { grid-template-columns: 1fr; } 
 }
 
 .cart-section, .summary-section {
@@ -1403,17 +1480,17 @@ color: var(--yellow-color);
 .item-name { font-weight: 600; color: #2d3748; margin-bottom: 4px; }
 .item-price { color: #718096; font-size: 0.9rem; }
 
-/* ==========================================================================
+/* 
    PERBAIKAN TAMPILAN COUNTER QUANTITY (TANPA KOTAK BOX)
-   ========================================================================== */
+    */
 
 /* 1. Hilangkan background abu-abu/border dari pembungkus utamanya */
 .quantity-control {
     display: flex;
     align-items: center;
-    gap: 12px;         /* Mengatur jarak renggang antara -, angka, dan + */
-    background: none;  /* Menghapus background box */
-    padding: 0;        /* Menghapus padding bawaan box */
+    gap: 12px;         
+    background: none; 
+    padding: 0;        
     border-radius: 0;
 }
 
@@ -1526,6 +1603,66 @@ color: var(--yellow-color);
     gap: 8px;
 }
 .btn-checkout:hover { background-color: #11b237; }
+
+a, a:visited {
+    text-decoration: none;
+    color: inherit; /* Meniru warna teks dari parent/pembungkusnya */
+}
+
+/* Styling animasi css switch */
+.switch-status input:checked + .slider-round {
+    background-color: #28a745;
+}
+.switch-status input:checked + .slider-round:before {
+    transform: translateX(24px);
+}
+.switch-status .slider-round:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+/* Untuk Buka - Tutup */
+.slider-round {
+    position: absolute; 
+    top: 0; left: 0; right: 0; bottom: 0; 
+    transition: .4s; 
+    border-radius: 34px;
+}
+
+.slider-round:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* KONDISI BUKA: Latar hijau, posisi bulatan berada di sebelah kanan */
+.slider-buka {
+    background-color: #28a745;
+}
+.slider-buka:before {
+    transform: translateX(24px);
+}
+
+/* KONDISI TUTUP: Latar merah, posisi bulatan berada di sebelah kiri */
+.slider-tutup {
+    background-color: #dc3545;
+}
+.slider-tutup:before {
+    transform: translateX(4px);
+}
 
 @media (max-width: 950px) {
     .seller-content-grid {

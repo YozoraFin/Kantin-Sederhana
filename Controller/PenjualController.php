@@ -14,28 +14,53 @@ class PenjualController {
         $kantin = $this->kantinM->getKantinByUserId($_SESSION['user_id']);
         $this->kantinId = $kantin['ID_Kantin'] ?? null;
     }
-
+        
     public function dashboard() {
         $revenue = $this->kantinM->getTotalRevenue($this->kantinId);
         $incoming = $this->trxM->getOrdersByPenjual($this->kantinId, 'Proses');
-        require_once 'view/user/pesanan.php'; // Menunggu
+        $kantin = $this->kantinM->getKantinByUserId($_SESSION['user_id']);
+
+        require_once 'view/user/penjual.php'; // Menunggu
     }
 
     public function updateStatusPesanan() {
-        $idTrx = $_GET['id_trx'];
-        $status = $_GET['status']; // 'Siap' atau 'Ditolak'
-        $this->trxM->updateStatus($idTrx, $status);
-        header("Location: index.php?page=penjual-dashboard");
+        // 1. Ambil parameter dari URL jika diklik via JS Fetch
+        $idTrx = $_GET['id_trx'] ?? null;
+        $status = $_GET['status'] ?? null;
+
+        // 2. JIKA parameter valid, jalankan update database untuk AJAX
+        if ($idTrx && $status) {
+            $result = $this->trxM->updateStatus($idTrx, $status);
+
+            header('Content-Type: application/json');
+            if ($result) {
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Gagal memperbarui status di database.']);
+            }
+            exit(); // Memastikan respons hanya berupa JSON untuk JavaScript
+        }
+        
+        // Jika tidak ada parameter (refresh biasa), abaikan fungsi ini agar rute index.php berlanjut normal
+    }
+
+    public function toggleStatus() {
+        $toggle = $this->kantinM->toggleStatusKantin($this->kantinId);
+        if($toggle) {
+            header("Location: index.php?page=penjual-dashboard");
+        } else {
+            echo "<script>alert('Terjadi kesalahan'); window.location='index.php?page=penjual-dashboard';</script>";
+        }
     }
 
     public function menuList() {
         $menus = $this->productM->getMenuByKantin($this->kantinId);
-        require_once 'app/views/penjual/menu.php'; // Menunggu
+        require_once 'view/user/listmenu.php'; // Menunggu
     }
 
     public function addMenu() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $this->productM->createProduct($_POST['nama'], $_POST['harga'], $_POST['id_kategori'], $this->kantinId, $_POST['deskripsi']);
+            $this->productM->createProduct($_POST['nama'], $_POST['harga'], $_POST['id_kategori'], $this->kantinId, $_POST['deskripsi'], $_POST['Produk_url']);
             header("Location: index.php?page=penjual-menu");
         }
     }

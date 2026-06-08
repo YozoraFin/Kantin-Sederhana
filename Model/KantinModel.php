@@ -32,12 +32,22 @@ class KantinModel {
         return $stmt->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
     }
 
+    public function toggleStatusKantin($id) {
+        $dKantin = $this->db->query("SELECT * FROM kantin WHERE ID_Kantin = $id")->fetch(PDO::FETCH_ASSOC);
+
+        if($dKantin) {
+            $stmt = $this->db->prepare("UPDATE kantin SET Status_Buka=? WHERE ID_Kantin=?");
+            return $stmt->execute([$dKantin["Status_Buka"] == 1 ? 0 : 1, $id]);
+        }
+        return NULL;
+    }
+
     public function getAllKantinAdmin() {
         return $this->db->query("SELECT k.*, u.Nama_User FROM kantin k LEFT JOIN users u ON k.ID_User = u.ID_User")->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function createKantin($nama, $telp, $idUser, $status) {
-        $stmt = $this->db->prepare("INSERT INTO kantin (Nama_Kantin, Telp_Kantin, ID_User, Status_Buka) VALUES (?, ?, ?, ?)");
-        return $stmt->execute([$nama, $telp, $idUser, $status]);
+    public function createKantin($nama, $telp, $idUser, $status, $kantinurl) {
+        $stmt = $this->db->prepare("INSERT INTO kantin (Nama_Kantin, Telp_Kantin, ID_User, Status_Buka, Kantin_url) VALUES (?, ?, ?, ?, ?)");
+        return $stmt->execute([$nama, $telp, $idUser, $status, $kantinurl]);
     }
 
     public function updateKantin($id, $nama, $telp, $status) {

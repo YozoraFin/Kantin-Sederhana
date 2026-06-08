@@ -71,6 +71,10 @@ if (!isset($_SESSION['user_id']) && $page !== 'login' && $page !== 'proses-login
         checkRole("Penjual");
         (new PenjualController($conn))->dashboard();
         break;
+    case 'penjual-toggle-status':
+        checkRole("Penjual");
+        (new PenjualController($conn))->toggleStatus();
+        break;
     case 'penjual-status-pesanan':
         checkRole("Penjual");
         (new PenjualController($conn))->updateStatusPesanan();

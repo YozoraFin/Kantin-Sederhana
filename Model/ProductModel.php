@@ -16,9 +16,9 @@ class ProductModel {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function createProduct($nama, $harga, $idKategori, $idKantin, $deskripsi) {
-        $stmt = $this->db->prepare("INSERT INTO produk (Nama_Produk, Harga_Produk, ID_Kategori, ID_Kantin, Deskripsi_Produk) VALUES (?, ?, ?, ?, ?)");
-        return $stmt->execute([$nama, $harga, $idKategori, $idKantin, $deskripsi]);
+    public function createProduct($nama, $harga, $idKategori, $idKantin, $deskripsi, $produkurl) {
+        $stmt = $this->db->prepare("INSERT INTO produk (Nama_Produk, Harga_Produk, ID_Kategori, ID_Kantin, Deskripsi_Produk, Produk_url) VALUES (?, ?, ?, ?, ?, ?)");
+        return $stmt->execute([$nama, $harga, $idKategori, $idKantin, $deskripsi, $produkurl]);
     }
     public function updateProduct($id, $nama, $harga, $idKategori, $deskripsi) {
         $stmt = $this->db->prepare("UPDATE produk SET Nama_Produk=?, Harga_Produk=?, ID_Kategori=?, Deskripsi_Produk=? WHERE ID_Produk=?");

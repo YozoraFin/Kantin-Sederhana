@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="../src/style.css">
+    <link rel="stylesheet" href="/Kantin-Sederhana/view/src/style.css">
     <title>Home - SIKANTIN</title>
 </head>
 <body>
@@ -17,13 +17,13 @@
 
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="home.php" class="nav-link active">Home</a>
+                    <a href="index.php?page=pembeli-dashboard">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="tenant.php" class="nav-link">Tenant</a>
+                    <a href="index.php?page=kantin-list" class="nav-link">Tenant</a>
                 </li>
                 <li class="nav-item">
-                    <a href="pesanan.php" class="nav-link">Pesanan</a>
+                    <a href="index.php?page=pembeli-dashboard" class="nav-link">Pesanan</a>
                 </li>
             </ul>
 

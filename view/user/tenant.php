@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="../src/style.css">
+    <link rel="stylesheet" href="/Kantin-Sederhana/view/src/style.css">
     <title>Tenant - SIKANTIN</title>
 </head>
 <body>
@@ -15,12 +15,23 @@
             <ul class="nav-menu">
                 <li class="nav-item"><a href="index.php?page=pembeli-dashboard" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="index.php?page=kantin-list" class="nav-link active">Tenant</a></li>
-                <li class="nav-item"><a href="index.php?page=pembeli-dashboard" class="nav-link">Pesanan</a></li>
+                <li class="nav-item"><a href="index.php?page=pembeli-dashboard" class="nav-link"></a></li>
             </ul>
-            <div class="nav-actions">
-                <a href="index.php?page=ganti-password" class="nav-profil"><i class="fa-solid fa-circle-user"></i></a>
-                <a href="index.php?page=keranjang" class="keranjang"><i class="fa-solid fa-cart-shopping"></i></a>
-            </div>
+             <div class="nav-actions" style="display: flex; align-items: center; gap: 40px;">
+    <a href="index.php?page=keranjang" class="nav-icon" title="Keranjang" 
+       style="color: #ffffff; font-size: 1.5rem; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; transition: 0.2s;"
+        onmouseover="this.style.color='var(--yellow-color)'; this.style.transform='scale(1.1)';"
+       onmouseout="this.style.color='#ffffff'; this.style.transform='scale(1.0)';">
+       <i class="fa-solid fa-cart-shopping"></i>
+    </a>
+    
+    <a href="index.php?page=logout" class="nav-icon" title="Logout" onclick="return confirm('Apakah Anda yakin ingin keluar dari aplikasi SIKANTIN?')"
+       style="color: #ffffff; font-size: 1.5rem; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; transition: 0.2s;"
+       onmouseover="this.style.color='var(--yellow-color)'; this.style.transform='scale(1.1)';"
+       onmouseout="this.style.color='#ffffff'; this.style.transform='scale(1.0)';">
+        <i class="fa-solid fa-right-from-bracket"></i>
+    </a>
+</div>
         </nav>
     </header>
 
@@ -46,7 +57,15 @@
                             
                             <a href="index.php?page=kantin-detail&id=<?= $kantin['ID_Kantin'] ?? $kantin['id_kantin'] ?>" class="tenant-card" style="text-decoration: none; color: inherit; background: white; padding: 15px; border-radius: 12px; width: 280px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
                                 <div class="tenant-card-img" style="margin-bottom: 10px;">
-                                    <img src="Kantin Upn.jpeg" alt="" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px;">
+                                   <div class="tenant-card-img" style="margin-bottom: 10px;">
+                                        <?php 
+        
+    $fotoKantin = !empty($kantin['Kantin_url']) ? $kantin['Kantin_url'] : '';
+    ?>
+    <img src="<?= htmlspecialchars($fotoKantin) ?>" 
+         alt="<?= htmlspecialchars($kantin['Nama_Kantin'] ?? '') ?>" 
+         style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px;">
+</div>
                                 </div>
                                 <div class="tenant-card-info">
                                     <h3 class="tenant-name" style="margin: 5px 0;"><?= htmlspecialchars($kantin['Nama_Kantin'] ?? '') ?></h3>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="../src/style.css">
+    <link rel="stylesheet" href="/Kantin-Sederhana/view/src/style.css">
     <title>Keranjang Belanja - SIKANTIN</title>
 </head>
 <body>
@@ -13,60 +13,70 @@
         <nav class="navbar">
             <a href="#" class="nav-logo"><h2 class="logo-text">SIKANTIN</h2></a>
             <ul class="nav-menu">
-                <li class="nav-item"><a href="home.php" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="tenant.php" class="nav-link">Tenant</a></li>
-                <li class="nav-item"><a href="pesanan.php" class="nav-link">Pesanan</a></li>
+                <li class="nav-item"><a href="index.php?page=pembeli-dashboard" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="index.php?page=kantin-list" class="nav-link">Tenant</a></li>
             </ul>
             <div class="nav-actions">
-                <a href="profil.php" class="nav-profil"><i class="fa-solid fa-circle-user"></i></a>
-                <a href="keranjang.php" class="nav-cart active"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="index.php?page=ganti-password" class="nav-profil"><i class="fa-solid fa-circle-user"></i></a>
+                <a href="index.php?page=keranjang" class="nav-cart active"><i class="fa-solid fa-cart-shopping"></i></a>
             </div>
         </nav>
     </header>
 
-    <form action="proses_checkout.php" method="POST">
+    <form action="index.php?page=checkout" method="POST">
         
-        <input type="hidden" name="id_kantin" value="1"> 
-
         <div class="cart-container">
             
             <div class="cart-section">
-                <div class="cart-title">
-                    <i class="fa-solid fa-store" style="color: #013220;"></i> Pesanan dari: <strong>Warung Berkah</strong>
-                </div>
+                <?php if (!empty($items)): ?>
+                    <?php 
+                    // Ambil info nama kantin & ID kantin dari item pertama yang ada di keranjang
+                    $namaKantin = $items[0]['Nama_Kantin'] ?? 'Kantin';
+                    $idKantin = $items[0]['ID_Kantin'] ?? '';
+                    ?>
+                    
+                    <input type="hidden" name="id_kantin" value="<?= $idKantin ?>"> 
 
-                <div class="cart-item" data-detail-id="101" data-harga="15000">
-                    <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?w=200" class="cart-item-img" alt="Nasi Goreng">
-                    <div class="cart-item-info">
-                        <div class="item-name">Nasi Goreng Gila</div>
-                        <div class="item-price">Rp 15.000</div>
+                    <div class="cart-title">
+                        <i class="fa-solid fa-store" style="color: #013220;"></i> Pesanan dari: <strong><?= htmlspecialchars($namaKantin) ?></strong>
                     </div>
-                    <div class="quantity-control">
-                        <button type="button" class="quantity-btn btn-minus">-</button>
-                        <input type="number" class="quantity-input" value="2" readonly>
-                        <button type="button" class="quantity-btn btn-plus">+</button>
-                    </div>
-                    <div class="item-subtotal">Rp <span class="item-subtotal-val">30.000</span></div>
-                </div>
 
-                <div class="cart-item" data-detail-id="102" data-harga="3000">
-                    <img src="https://images.unsplash.com/photo-1497534446932-c925b458314e?w=200" class="cart-item-img" alt="Es Teh">
-                    <div class="cart-item-info">
-                        <div class="item-name">Es Teh Manis Segar</div>
-                        <div class="item-price">Rp 3.000</div>
-                    </div>
-                    <div class="quantity-control">
-                        <button type="button" class="quantity-btn btn-minus">-</button>
-                        <input type="number" class="quantity-input" value="2" readonly>
-                        <button type="button" class="quantity-btn btn-plus">+</button>
-                    </div>
-                    <div class="item-subtotal">Rp <span class="item-subtotal-val">6.000</span></div>
-                </div>
+                    <?php 
+                    $totalBelanjaan = 0; 
+                    foreach ($items as $item): 
+                        $subtotalItem = $item['Jumlah'] * $item['Harga_Produk'];
+                        $totalBelanjaan += $subtotalItem;
+                    ?>
+                        <div class="cart-item" data-detail-id="<?= $item['ID_Detail_Keranjang'] ?? $item['id_detail'] ?>" data-harga="<?= $item['Harga_Produk'] ?>">
+                            <img src="<?= !empty($item['Produk_url']) ? htmlspecialchars($item['Produk_url']) : 'Kantin Upn.jpeg' ?>" class="cart-item-img" alt="<?= htmlspecialchars($item['Nama_Produk']) ?>">
+                            
+                            <div class="cart-item-info">
+                                <div class="item-name"><?= htmlspecialchars($item['Nama_Produk']) ?></div>
+                                <div class="item-price">Rp <?= number_format($item['Harga_Produk'], 0, ',', '.') ?></div>
+                            </div>
+                            
+                            <div class="quantity-control">
+                                <button type="button" class="quantity-btn btn-minus">-</button>
+                                <input type="number" class="quantity-input" value="<?= $item['Jumlah'] ?>" readonly>
+                                <button type="button" class="quantity-btn btn-plus">+</button>
+                            </div>
+                            
+                            <div class="item-subtotal">Rp <span class="item-subtotal-val"><?= number_format($subtotalItem, 0, ',', '.') ?></span></div>
+                        </div>
+                    <?php endforeach; ?>
 
-                <div class="note-group">
-                    <label for="catatan"><i class="fa-solid fa-comment-dots"></i> Catatan untuk Penjual (Opsional)</label>
-                    <textarea id="catatan" name="catatan" class="note-textarea" rows="2" placeholder="Contoh: Nasi gorengnya pedas bgt ya bang, es tehnya manis plastik aja..."></textarea>
-                </div>
+                    <div class="note-group">
+                        <label for="catatan"><i class="fa-solid fa-comment-dots"></i> Catatan untuk Penjual (Opsional)</label>
+                        <textarea id="catatan" name="catatan" class="note-textarea" rows="2" placeholder="Contoh: Nasi gorengnya pedas bgt ya bang, es tehnya manis plastik aja..."></textarea>
+                    </div>
+
+                <?php else: ?>
+                    <div style="text-align: center; padding: 40px; color: #666;">
+                        <i class="fa-solid fa-basket-shopping" style="font-size: 3rem; color: #ccc; margin-bottom: 15px;"></i>
+                        <h3>Keranjang belanjamu masih kosong nih</h3>
+                        <p style="margin-top: 10px;"><a href="index.php?page=kantin-list" style="color: #013220; font-weight: bold; text-decoration: underline;">Yuk, cari makanan enak dulu!</a></p>
+                    </div>
+                <?php endif; ?>
             </div>
 
             <div class="summary-section">
@@ -74,15 +84,15 @@
                 
                 <div class="summary-row">
                     <span>Subtotal Menu</span>
-                    <span>Rp <span id="subtotal-menu-val">36.000</span></span>
+                    <span>Rp <span id="subtotal-menu-val"><?= isset($totalBelanjaan) ? number_format($totalBelanjaan, 0, ',', '.') : '0' ?></span></span>
                 </div>
                 
                 <div class="summary-row total-row">
                     <span>Total Pembayaran</span>
-                    <span>Rp <span id="total-pembayaran-val">36.000</span></span>
+                    <span>Rp <span id="total-pembayaran-val"><?= isset($totalBelanjaan) ? number_format($totalBelanjaan, 0, ',', '.') : '0' ?></span></span>
                 </div>
 
-                <button type="submit" class="btn-checkout">
+                <button type="submit" class="btn-checkout" <?= empty($items) ? 'disabled style="background: #ccc; cursor: not-allowed;"' : '' ?>>
                     <i class="fa-solid fa-wallet"></i> Konfirmasi & Pesan Sekarang
                 </button>
             </div>
@@ -92,23 +102,17 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            
             const cartItems = document.querySelectorAll('.cart-item');
 
-            // Fungsi utama untuk mengkalkulasi ulang seluruh total belanja di layar
             function hitungUlangTotal() {
                 let totalSubtotalMenu = 0;
-
                 document.querySelectorAll('.cart-item').forEach(item => {
                     const qty = parseInt(item.querySelector('.quantity-input').value);
                     const harga = parseInt(item.getAttribute('data-harga'));
                     totalSubtotalMenu += (qty * harga);
                 });
 
-                // Update teks Subtotal Menu di sebelah kanan
                 document.getElementById('subtotal-menu-val').innerText = totalSubtotalMenu.toLocaleString('id-ID');
-                
-                // LANGSUNG UPDATE: Total Pembayaran disamakan dengan totalSubtotalMenu (tanpa tambahan biayaLayanan)
                 document.getElementById('total-pembayaran-val').innerText = totalSubtotalMenu.toLocaleString('id-ID');
             }
 
@@ -121,50 +125,43 @@
                 const detailId = item.getAttribute('data-detail-id');
                 const harga = parseInt(item.getAttribute('data-harga'));
 
-                // Fungsi kirim data asinkron (AJAX) ke Backend
+                // SINKRONISASI: Mengubah target asinkron AJAX ke route index.php agar ditangkap controller
                 async function kirimKeBackend(aksi) {
                     try {
-                        let respon = await fetch('update_keranjang.php', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                            body: `id_detail=${detailId}&action=${aksi}`
-                        });
-                        let data = await respon.json();
-                        
-                        if (!data.success) {
-                            alert('Gagal memperbarui data di server.');
+                        let targetUrl = '';
+                        if (aksi === 'tambah') {
+                            // Kamu bisa buatkan fungsi update qty asinkron jika diperlukan, 
+                            // atau biarkan hitungan UI berjalan sementara waktu.
+                            return; 
+                        } else if (aksi === 'hapus') {
+                            // SINKRONISASI: jika porsi 1 dikurangi, lempar langsung ke case 'hapus-keranjang'
+                            window.location.href = `index.php?page=hapus-keranjang&id_detail=${detailId}`;
+                            return;
                         }
                     } catch (eror) {
                         console.error('Koneksi ke backend bermasalah:', eror);
                     }
                 }
 
-                // Tombol TAMBAH (+)
                 btnPlus.addEventListener('click', function() {
                     let angkaSkrg = parseInt(qtyInput.value);
                     angkaSkrg += 1;
                     qtyInput.value = angkaSkrg;
-
                     subtotalText.innerText = (angkaSkrg * harga).toLocaleString('id-ID');
                     hitungUlangTotal();
                     kirimKeBackend('tambah');
                 });
 
-                // Tombol KURANG (-)
                 btnMinus.addEventListener('click', function() {
                     let angkaSkrg = parseInt(qtyInput.value);
-                    
                     if (angkaSkrg > 1) {
                         angkaSkrg -= 1;
                         qtyInput.value = angkaSkrg;
-
                         subtotalText.innerText = (angkaSkrg * harga).toLocaleString('id-ID');
                         hitungUlangTotal();
                         kirimKeBackend('kurang');
                     } else {
                         if (confirm('Hapus menu ini dari keranjang belanja?')) {
-                            item.remove();
-                            hitungUlangTotal();
                             kirimKeBackend('hapus');
                         }
                     }
