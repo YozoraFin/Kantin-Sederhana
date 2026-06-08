@@ -39,7 +39,7 @@ class AdminController {
     public function manageKantin() {
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
             if(isset($_POST['create'])) $this->kantinM->createKantin($_POST['nama'], $_POST['telp'], $_POST['id_user'], $_POST['status'], $_POST['Kantin_url']);
-            if(isset($_POST['update'])) $this->kantinM->updateKantin($_POST['id'], $_POST['nama'], $_POST['telp'], $_POST['status']);
+            if(isset($_POST['update'])) $this->kantinM->updateKantin($_POST['id'], $_POST['nama'], $_POST['telp'], $_POST['status'], $_POST['Kantin_url']);
         }
         if(isset($_GET['delete_kantin'])) $this->kantinM->deleteKantin($_GET['delete_kantin']);
         if(isset($_GET['delete_menu'])) $this->productM->deleteProduct($_GET['delete_menu']);

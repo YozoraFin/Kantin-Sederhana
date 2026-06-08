@@ -25,7 +25,7 @@ class TransactionModel {
             $ins = $this->db->prepare("INSERT INTO detail_transaksi (ID_Transaksi, ID_Produk, Jumlah, Subtotal) VALUES (?, ?, ?, ?)");
             $ins->execute([$idTrx, $item['ID_Produk'], $item['Jumlah'], $item['Subtotal']]);
         }
-        return $cart['ID_Keranjang'];
+        return $cart['ID_Keranjang'];   
     }
 
     public function getOrdersByPembeli($idUser, $isOngoing = true) {

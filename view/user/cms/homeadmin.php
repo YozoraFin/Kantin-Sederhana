@@ -113,6 +113,11 @@
                     <label for="nama_kantin">Nama Stan Kantin</label>
                     <input type="text" id="nama_kantin" name="nama" placeholder="Contoh: Kantin Mungil..." required>
                 </div>
+
+                <div class="form-group">
+                    <label for="kantin_url">Gambar Kantin (url)</label>
+                    <input type="text" id="kantin_url" name="Kantin_url" placeholder="Contoh: https://ik.imagekit.io/primaku..." required>
+                </div>
                 
                 <div class="form-group">
                     <label for="telp_kantin">Nomor Telepon Stan</label>

@@ -18,7 +18,7 @@ class CartModel {
     }
 
     public function getCartContent($idUser) {
-        $stmt = $this->db->prepare("SELECT dk.*, p.Nama_Produk, p.Harga_Produk, k.Nama_Kantin, k.ID_Kantin FROM detail_keranjang dk 
+        $stmt = $this->db->prepare("SELECT dk.*, p.Nama_Produk, p.Harga_Produk, p.Produk_url, k.Nama_Kantin, k.ID_Kantin FROM detail_keranjang dk 
                                     JOIN keranjang kr ON dk.ID_Keranjang = kr.ID_Keranjang 
                                     JOIN produk p ON dk.ID_Produk = p.ID_Produk 
                                     JOIN kantin k ON kr.ID_Kantin = k.ID_Kantin WHERE kr.ID_User = ?");
@@ -40,6 +40,12 @@ class CartModel {
             $stmt = $this->db->prepare("INSERT INTO detail_keranjang (ID_Keranjang, ID_Produk, Jumlah, Subtotal) VALUES (?, ?, 1, ?)");
             $stmt->execute([$idCart, $idProduk, $harga]);
         }
+        $this->updateTotalHargaKeranjang($idCart);
+    }
+
+    public function updateTotalDetailCart($idCart, $idDetail, $subtotal, $jumlah) {
+        $stmt = $this->db->prepare("UPDATE detail_keranjang SET Jumlah = ?, Subtotal = ? WHERE ID_Detail_Keranjang = ?");
+        $stmt->execute([$jumlah, $subtotal, $idDetail]);
         $this->updateTotalHargaKeranjang($idCart);
     }
 
